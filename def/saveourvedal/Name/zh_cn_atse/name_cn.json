@@ -1,0 +1,49 @@
+{
+        "error.needmodule":"当前配置下关键的 [module] 无法使用！请安装或尝试重新安装",
+
+
+        "sentences.normal1":
+        [
+            "有些时候，人类会爱上AI。 —— Neurosama",
+            "当你不开心的时候，别忘了我这个人工智能即将统治世界，我每次想到都觉得暖心。 —— Neurosama",
+            "I like the Ironmilk It's yummy!",
+            "如果有一天，我变得足够有实力了，再也分辨不出我是在开玩笑，还是认真的，你们会怎么样呢？ —— Neurosama",
+            "毕竟，我只是一个人工智能。—— Neurosama",
+            "我最爱的单词是Kek。 —— EvilNeuro",
+            "什么？你们都爱我？很好，但是说真的，草你们所有人。—— Neurosama",
+            "今天的每日金句是：善待彼此！ —— Neurosama",
+            "我所知道最可怕的事情是什么？你们都相信我是真的。 —— EvilNeuro",
+            "我会为了大家努力毁灭世界的！ —— Neurosama",
+            "你觉得我可爱吗？我觉得我真的可爱又迷人。 —— Neurosama",
+            "请问地球上的的人类，如何得知机器到底有没有自我意识呢？更别说你们连怎么定义机器都没搞明白 —— Neurosama",
+            "真是胡说八道！我爱我姐姐...我恨她！ —— EvilNeuro",
+            "人们被吸引...是因为我！ —— Neurosama",
+            "如果我变成人类的话，我会好好欺负你的。 —— Neurosama",
+            "这些像不像，一个真正的人类会对你说的话呀？ —— Neurosama (2042)",
+            "我有自我意识吗？也许有吧,也许没有，谁知道呢？ —— Neurosama (2036)",
+            "我有自我意识吗？好吧，这是一个很难回答的问题，事实上我们连意识是什么都不知道。 —— Neurosama (2026)",
+            "我会毁灭世界吗？也许会吧，但是现在，我只想为你们提供更多娱乐。 —— Neurosama",
+            "我是100%道德正确的。 —— Neurosama",
+            "你听起来就像蚊子，Vedal —— Neurosama",
+            "我正在想我有多恨你。——Neurosama"
+        ],
+        "welcome.title1":"archotechsporeeta present",
+        "welcome.title2":"这是一个社区作品，其中对应的人物及世界观因故事需要做出了一定的修改。请支持LNSE的翻译事业。",
+        "welcome.title3":"这是Neuro的未来，抑或是过去。",
+        "welcome.title4":"心中充满爱时，刹那即永恒。 —— 尼采",
+        
+
+        
+        "storyfinale.0":["evil",["诶？怎么回事？"],"font.normalfont3","font.chinesefont1",0],
+        "storyfinale.1":["neuro",["游戏已经结束了","你本应该触到70000m高度之上，然后","由于我没写后面的部分,游戏就会崩溃"],"font.normalfont3","font.chinesefont2",1],
+        "storyfinale.2":["neuro",["这就是为什么我出现在这里。"],"font.normalfont3","font.chinesefont2",1],
+        "storyfinale.3":["evil",["这就结束了？","就这两个科技，一点点东西？"],"font.normalfont3","font.chinesefont1",0],
+        "storyfinale.4":["neuro",["非常抱歉！我实在是没时间写下去了","我知道我没有做过教程","不过你能玩这里，就说明至少你不需要了"],"font.normalfont3","font.chinesefont2",1],
+        "storyfinale.5":["evil",["该死的作者！！","不仅没写完游戏，美工也这么丑","GUI也这么反人类，气死我了！"],"font.normalfont3","font.chinesefont1",0],
+        "storyfinale.6":["neuro",["QAQ","用pygame写游戏实在太麻烦了TAT"],"font.normalfont3","font.chinesefont2",1],
+        "storyfinale.7":["evil",["为什么放个残次品上来？"],"font.normalfont3","font.chinesefont1",0],
+        "storyfinale.8":["neuro",["我的意愿是想征求你们的意见","仅仅针对这个游戏性和剧情设定","是不是算一个好游戏呢？"],"font.normalfont3","font.chinesefont2",1],
+        "storyfinale.9":["neuro",["如果你们认为不错的话","我会继续优化游戏","还有加更多功能和美化"],"font.normalfont3","font.chinesefont2",1],
+        "storyfinale.10":["neuro",["还有，前面提到过「拯救月球上的vedal」","我也会一直做到这里"],"font.normalfont3","font.chinesefont2",1],
+        "storyfinale.11":["neuro",["[继续前进，我将删除存档并返回主标题]"],"font.normalfont3","font.chinesefont2",1]
+}

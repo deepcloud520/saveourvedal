@@ -1,0 +1,12 @@
+{
+    "musicplaytype":"Base",
+    "OPEN_ALPHA":0,
+    "name":"zh_cn_atse",
+    "entiy":"texture.entiy3",
+    "startmode":"GUI",
+    "inlinedebug":0,
+    "saveourvedal":
+    {
+        "background":["texture.entiy"]
+    }
+}
