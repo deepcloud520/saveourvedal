@@ -1,18 +1,18 @@
 [
     {
-    "texture.rocket.AIhead_mk1_0":["H10.png","1x0","25x30"],
-    "texture.rocket.AIhead_mk1_1":["H11.png","1x0","25x30"],
-    "texture.rocket.ST_2_Flea":["ST_2_Flea.png","2x0","28x32"],
-    "texture.rocket.ST_3_Rabbit":["ST_3_Rabbit.png","2x0","28x50"],
-    "texture.rocket.ST_fire_0":["ST_fire_1.png","0x0","30x50"],
-    "texture.rocket.ST_fire_1":["ST_fire_2.png","0x0","30x50"],
-    "texture.rocket.ST_fire_2":["ST_fire_3.png","0x0","30x50"],
+    "texture.part.rocket.controller_0_0":["H10.png","1x0","25x30"],
+    "texture.part.rocket.controller_0_1":["H11.png","1x0","25x30"],
+    "texture.part.rocket.ST_2_Flea":["ST_2_Flea.png","2x0","28x32"],
+    "texture.part.rocket.ST_3_Rabbit":["ST_3_Rabbit.png","2x0","28x50"],
+    "texture.part.rocket.ST_fire_0":["ST_fire_1.png","0x0","30x50"],
+    "texture.part.rocket.ST_fire_1":["ST_fire_2.png","0x0","30x50"],
+    "texture.part.rocket.ST_fire_2":["ST_fire_3.png","0x0","30x50"],
     "texture.terr":["terr.png","0x0","800x50"],
     
-    "texture.rocket.FT04":["FT_04.png","0x0","30x29"],
-    "texture.rocket.FT02":["FT_02.png","0x0","30x11"],
+    "texture.part.rocket.FT04":["FT_04.png","0x0","30x29"],
+    "texture.part.rocket.FT02":["FT_02.png","0x0","30x11"],
     
-    "texture.rocket.LT05_Candy":["LT-05_Candy.png","1x0","18x23"],
+    "texture.part.rocket.LT05_Candy":["LT-05_Candy.png","1x0","18x23"],
     
     "texture.space.earth_space":["earth_space.png","0x0","1000x6000"],
     "texture.talker.anny":["anny.png","14x9","100x100"],
@@ -31,38 +31,40 @@
     "texture.entiy2":["entiy2.png","0x0","800x600"],
     "texture.entiy3":["entiy3.png","0x0","800x600"],
     "texture.entiy4":["entiy4.png","0x0","800x600"],
-    "texture.story0_bedroom":["story0_bedroom.png","0x0","1000x450","2"],
-    "texture.story0_bed":["story0_bed.png","0x24","100x16","22"],
-    "texture.story0_cookie":["story0_cookie.png","0x0","100x160","2"],
-    "texture.story0_streamroom_background":["story0_streamroom_background.png","0x0","400x200","2"],
+    "texture.detla":["detla.jpg","240x100","720x500"],
+    "texture.story0.bedroom":["story0_bedroom.png","0x0","1000x450","2"],
+    "texture.story0.bed":["story0_bed.png","0x24","100x16","22"],
+    "texture.story0.cookie":["story0_cookie.png","0x0","100x160","2"],
+    "texture.story0.cookie2":["story0_cookie2.png","0x0","100x160","2"],
+    "texture.story0.streamroom_background":["story0_streamroom_background.png","0x0","400x200","2"],
     "texture.terminal.neurosamaai_1":["alpha.jpg","3x0","530x300"],
     "texture.terminal.evilneuroai_2":["beta.jpg","50x0","800x600"],
     "texture.terminal.evilneuroai_3":["detla.jpg","0x0","800x600"],
     "texture.vase1":["vase.png","0x0","20x40","2"],
     "texture.vase2":["vase2.png","0x0","20x40","2"],
-    "texture.story0_15_tarot":["tarot/15_tarot_small.png","0x0","200x364"],
-    "texture.story0_16_tarot":["tarot/16_tarot_small.png","0x0","200x364"],
-    "texture.story0_17_tarot":["tarot/17_tarot_small.png","0x0","200x364"],
-    "texture.story0_18_tarot":["tarot/18_tarot_small.png","0x0","200x364"],
+    "texture.story0.streamroom_blackfront":["story0_blackfront.png","10x80","290x120"],
+
+    "texture.story0.15_tarot":["tarot/15_tarot_small.png","0x0","200x364"],
+    "texture.story0.16_tarot":["tarot/16_tarot_small.png","0x0","200x364"],
+    "texture.story0.17_tarot":["tarot/17_tarot_small.png","0x0","200x364"],
+    "texture.story0.18_tarot":["tarot/18_tarot_small.png","0x0","200x364"],
+    "texture.story0.england_map":["england-b.png","0x0","1184x1560"],
+    "texture.story0.cat1":["twocats.jpg","0x0","800x500"],
+    "texture.story0.cat2":["cat2.png","0x0","400x300"],
+    "texture.story0.cat3":["cat3.png","0x0","400x300"],
+    "texture.story0.moon":["moon.png","0x0","186x157"],
 
     "texture.r_cloud":["r_cloud.jpg","0x50","1280x800"]
     },
     
     {
-        "music.entiy":"mus_entiy",
-        "music.saveload":"mus_a_title",
+        "music.entiy":"def/saveourvedal/resource/sound/mus_entiy.wav",
+        "music.saveload":"def/saveourvedal/resource/sound/mus_a_title.wav",
         "music.bd":
-        [
-            "mus_n_discord",
-            "mus_e_badapple",
-            "mus_n_duvet",
-            "mus_n_123",
-            "mus_n_bitter_choco_decoration",
-            "mus_e_doitallthetime",
-            "mus_e_idontknowhowtospeakit",
-            "mus_p_move",
-            "mus_p_backtowork"
-        ],
+        {
+            "mus_n_duvet":"def/saveourvedal/resource/sound/mus_n_duvet.ogg"
+        },
+        "music.story0_sec":"def/saveourvedal/resource/sound/story0/output.ogg",
         "rooms.story0":
         {
             "resource":"room_story0.json",
@@ -135,9 +137,9 @@
             }
         ],
 
-        "part.rocket.AIhead_mk1":
+        "part.rocket.controller_0":
         {
-            "name":"name.part.rocket.AIhead_mk1",
+            "name":"name.part.rocket.controller_0",
             "type":"UnmanedPod",
             "mass":0.015,
             "class": "Pod",
@@ -146,7 +148,7 @@
             {
                 "Electricity":100
             },
-            "image":{"normal":[["texture.rocket.AIhead_mk1_0",60],["texture.rocket.AIhead_mk1_1",2]]},
+            "image":{"normal":[["texture.part.rocket.controller_0_0",60],["texture.part.rocket.controller_0_1",2]]},
             "power":{"Electricity":-0.3},
             "cost":320
         },
@@ -162,7 +164,7 @@
                 "SolidFuel":140
             },
             "resource_consumption":0.47,
-            "image":{"normal":[["texture.rocket.ST_2_Flea",6000]]},
+            "image":{"normal":[["texture.part.rocket.ST_2_Flea",6000]]},
             "power":{},
             "thrust":6.5,
             "cost":300
@@ -179,7 +181,7 @@
                 "SolidFuel":375
             },
             "resource_consumption":0.6,
-            "image":{"normal":[["texture.rocket.ST_3_Rabbit",6000]]},
+            "image":{"normal":[["texture.part.rocket.ST_3_Rabbit",6000]]},
             "power":{},
             "thrust":17,
             "cost":300
@@ -195,7 +197,7 @@
             {
                 "LiquidFuel":120
             },
-            "image":{"normal":[["texture.rocket.FT02",6000]]},
+            "image":{"normal":[["texture.part.rocket.FT02",6000]]},
             "power":{},
             "cost":280
         },
@@ -210,8 +212,25 @@
             {
                 "LiquidFuel":300
             },
-            "image":{"normal":[["texture.rocket.FT04",6000]]},
+            "image":{"normal":[["texture.part.rocket.FT04",6000]]},
             "power":{},
+            "cost":420
+        },
+        "part.rocket.eviLFHTank_small":
+        {
+            "name":"name.part.rocket.eviLFHTank_small",
+            "type":"LiquidFuelTank",
+            "mass":2.2,
+            "class": "Thrust",
+            "hitbox":["0x0","30x29"],
+            "resource":
+            {
+                "Lithium":80,
+                "Fluorine":70,
+                "Hydrogen":120
+            },
+            "image":{"normal":[["texture.part.rocket.eviLFHTank_small",6000]]},
+            "power":{"Electricity":-0.1},
             "cost":420
         },
         "part.rocket.LT05_Candy":
@@ -225,11 +244,33 @@
             {
                 
             },
-            "image":{"normal":[["texture.rocket.LT05_Candy",6000]]},
+            "image":{"normal":[["texture.part.rocket.LT05_Candy",6000]]},
             "resource_consumption":0.35,
             "thrust":15.8,
             "power":{},
             "cost":1100
+        },
+        "part.rocket.XT0832_IRONyMILK":
+        {
+            "name":"name.part.rocket.XT0832_IRONyMILK",
+            "type":"LiquidThruster",
+            "mass":3.8,
+            "class": "Thrust",
+            "hitbox":["0x0","18x42"],
+            "resource":
+            {
+                
+            },
+            "image":{"normal":[["texture.part.rocket.XT0832_IRONyMILK",6000]]},
+            "resource_consumption":
+            {
+                "Lithium":0.02,
+                "Fluorine":0.0175,
+                "Hydrogen":0.03
+            },
+            "thrust":42.8,
+            "power":{},
+            "cost":11000
         },
         
 
@@ -264,7 +305,7 @@
             "research.part1":
             {
                 "name":"name.research.part1",
-                "part":[["part.rocket.flea","Thrust"],["part.rocket.AIhead_mk1","Pod"]],
+                "part":[["part.rocket.flea","Thrust"],["part.rocket.controller_0","Pod"]],
                 "info":"info.research.part1",
                 "science_points":0,
                 "compute_points":4,

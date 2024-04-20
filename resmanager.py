@@ -1,4 +1,5 @@
 import pathlib,tool,typing
+from simplelogger import mainlogger
 import pygame as pg
 
 
@@ -17,7 +18,7 @@ class ResourceDomain:
         self.resource.update({domain:res})
     def get_resource(self,domain : str):
         if domain not in self.resource:
-            print(self.name + ': "'+domain+'" is not existed')
+            mainlogger.error(self.name + ': "'+domain+'" is not existed')
         return self.resource.get(domain,self.null)
     def get_resource_extra(self,domain : str):
         ass = len(domain)
@@ -41,10 +42,14 @@ class ResourceDomain:
             self.load_resource_byfile(path)
         elif path.is_dir():
             self.load_resource_byfolder(path)
+    def __getitem__(self,key):
+        return self.get_resource(key)
+    def __setitem__(self,key,value):
+        self.add_resource(key,value)
 class NameResourceDomain_(ResourceDomain):
     def get_resource(self,domain : str):
         if domain not in self.resource:
-            print(self.name + ': "'+domain+'" is not existed')
+            mainlogger.error(self.name + ': "'+domain+'" is not existed')
             return domain
         return self.resource.get(domain,self.null)
 class DefResourceDomain_(ResourceDomain):

@@ -1,12 +1,13 @@
 {
-    "musicplaytype":"Base",
+    "musicplaytype":"Simpleaudio",
     "OPEN_ALPHA":0,
     "name":"zh_cn_atse",
     "entiy":"texture.entiy3",
     "startmode":"GUI",
     "inlinedebug":0,
+    "debuglevel":2,
     "saveourvedal":
     {
-        "background":["texture.entiy"]
+        "background":["texture.entiy3"]
     }
 }

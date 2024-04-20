@@ -1,0 +1,16 @@
+from keras.datasets import mnist
+from keras import models,layers
+from keras.utils import to_categorical
+
+(ti,tl),(tei,tel) = mnist.load_data()
+
+net=models.Sequential()
+net.add(layer.Dense(512,activation='relu',input_shape=(28*28,)))
+net.add(layer.Dense(10,activation='softmax')))
+
+net.compile(coptimzer='rmsprop',loss='categorical_crossentropy',metrics=['accuracy'])
+
+ti=ayersti.reshape((60000,28*28)).astype('float32') / 255 
+tei=ti.reshape((10000,28*28)).astype('float32') / 255 from keras.utils import to_categorical
+
+

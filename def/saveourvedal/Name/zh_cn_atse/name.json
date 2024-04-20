@@ -6,12 +6,14 @@
         "name.talker.evil":"Evil-Neuro",
         "name.talker.vedal":"Vedal",
         "name.talker.chat":"System",
-        "name.part.rocket.AIhead_mk1":"AIhead-mk1",
+        "name.part.rocket.controller_0":"0型控制器",
         "name.part.rocket.flea":"ST-1,“跳蚤”",
         "name.part.rocket.rabbit":"ST-2,“兔子”",
         "name.part.rocket.FT":"ST-2,“兔子”",
         "name.part.rocket.FT02":"FT-02 液体燃料储罐",
         "name.part.rocket.FT04":"FT-04 液体燃料储罐",
-        "name.part.rocket.LT05_Candy":"LT-05 “蛀牙” 液体燃料推进器"
+        "name.part.rocket.LT05_Candy":"LT-05 “蛀牙” 液体燃料推进器",
+        "name.part.rocket.eviLFHTank_small":"evi.锂氟氢三元储罐（小）",
+        "name.part.rocket.XT0832_IRONyMILK":"XT-083.2 “IRONy_MILK”三元推进器"
  
 }

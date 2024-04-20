@@ -5,7 +5,7 @@ from newcoretiny import Runable,Trigger
 import resmanager
 
 ROOMS={}
-
+NOWROOM=None
 
 
 def get_rooms():
@@ -15,6 +15,9 @@ def get_rooms():
 def clear_rooms():
     global ROOMS
     ROOMS={}
+def get_nowroom():
+    global NOWROOM
+    return NOWROOM
 
 class MyTrigger(Trigger):
     '''运行函数'''
@@ -62,9 +65,12 @@ class Room:
         self.livings=living
         self.images=image
     def build(self,worldengine):
+        global NOWROOM
         worldengine.blockeds_line=self.blockeds.copy()
         worldengine.livings_line=self.livings.copy()
         worldengine.images_line=self.images.copy()
+        # 修改现在的房间
+        NOWROOM=self.roomname
     def resume(self,worldengine):
         self.blockeds=worldengine.blockeds_line.copy()
         self.libings=worldengine.livings_line.copy()
@@ -178,11 +184,34 @@ class EntityRealDoor(EntityDoor):
         get_world().engine.camera_pos = get_centre_u(living.pos, point(0, 0) - get_world().window)+point(0,-80)
         living.vel=point(0,0)
         #print('transport',str(living.pos),str(self.pos))
-    def onhited(self,living,nhp,wayp,hittype):
+    def onhited(self,living:Entity,nhp,wayp,hittype):
         if self.onactive and isinstance(living,EntityPlayerBase) and hittype not in ('p1','p3'):
             # 说实话 我已经无法理解之前我写的那个物理引擎了
             self.sync(False)
             self.transport(living)
+
+class EntityRealDoorLocked(EntityRealDoor):
+    '''这个要时装的话还要重写sync'''
+    def __init__(self,pos,rect,locked=False,defname=None,transportpos=None,info=''):
+        self.locked=locked
+        super().__init__(pos,rect,defname,transportpos,info)
+    def unlock(self):
+        self.locked=False
+        self.update_info()
+    def lock(self):
+        self.locked=True
+        self.update_info()
+    def onhited(self,living,nhp,wayp,hittype):
+        if not self.locked:
+            super().onhited(living,nhp,wayp,hittype)
+    def update_info(self):
+        if self.locked:
+            self.info = self.extra_info + '(locked)'
+        else:
+            if self.onactive==False:
+                self.info=self.extra_info+'(closed)'
+            else:
+                self.info=self.extra_info+'(opened)'
 
 
 
@@ -196,10 +225,7 @@ class EntityBlocked_blank(Entity):
 
 
 
-class EntityScreen(Entity):
-    def __init__(self, pos,boxpos,boxrect,deep=0, defname=None, showdeep=0,info=''):
-        super().__init__(pos, boxpos=boxpos, boxrect=boxrect, deep=deep, defname=defname, showdeep=showdeep,info=info)
-        self.image = pg.Surface(point2tuple(boxrect)).convert_alpha()
+
 
 
 #
@@ -272,6 +298,15 @@ class EntityNeuro(EntityPlayerBase):
                 self.canmove = 0
             if hittype in ('p1', 'p3') and wayp.y < 0:
                 self.reset_jumpcount()
+
+
+
+class EntityScreen(Entity):
+    def __init__(self, pos,boxpos,boxrect,deep=0, defname=None, showdeep=0,info=''):
+        super().__init__(pos, boxpos=boxpos, boxrect=boxrect, deep=deep, defname=defname, showdeep=showdeep,info=info)
+        self.image = pg.Surface(point2tuple(boxrect)).convert_alpha()
+
+
 LASTEFFECT=None
 
 
@@ -300,14 +335,15 @@ def push_trigger(trigger):
 
 
 
-def makerooms(file):
+def makerooms(file,extra_map={}):
     # 这是我旧年涓的雨水，总舍不得拿来用
     roomjson=loadjson(file)
     entitymap = {
         'EntityImage':EntityImage,'EntityPlayer':EntityPlayer,'EntityDoor':EntityDoor,'EntityWindow':EntityWindow,
         'EntityDoorPaper':EntityDoorPaper,'EntityBlocked_blank':EntityBlocked_blank,'EntityBlocked':EntityBlocked,
-        'EntityDoorImm':EntityDoorImm,"EntityNeuro":EntityNeuro,"EntityScreen":EntityScreen,"EntityRealDoor":EntityRealDoor}
-    doorclass= ('EntityDoor','EntityDoorPaper','EntityDoorImm','EntityRealDoor')
+        'EntityDoorImm':EntityDoorImm,"EntityNeuro":EntityNeuro,"EntityScreen":EntityScreen,"EntityRealDoor":EntityRealDoor,"EntityRealDoorLocked":EntityRealDoorLocked}
+    entitymap.update(extra_map)
+    doorclass= ('EntityDoor','EntityDoorPaper','EntityDoorImm','EntityRealDoor','EntityRealDoorLocked')
     interfuncmap={'push_dialog':push_dialog,'push_trigger':push_trigger}
     rooms={}
     doortree={}
@@ -330,7 +366,8 @@ def makerooms(file):
                 # 转换info
                 if 'info' in e['data']:
                     e['data']['info'] = resmanager.NameResourceDomain.get_resource(e['data']['info'])
-                #转换interfunc
+                # 转换interfunc
+                # inject_type:"f" 直接注入到oninteracted上
                 kwargs={}
                 if 'interfunc' in e['data']:
                     kwargs=e['data']['interfunc']

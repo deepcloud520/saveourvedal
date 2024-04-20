@@ -152,17 +152,6 @@ get_d = lru_cache(64)(lambda pt1,pt2:pt1.distance_to(pt2))
 get_d_square = lru_cache(64)(lambda pt1,pt2:pt1.distance_squared_to(pt2))
 get_targetrad = lru_cache(16)(lambda pt1,pt2:pt1.angle_to(pt2))
 '''
-def fast_refships_distance(refpoints,pt2,segmentrad):
-    myset=set()
-    rmlst=[]
-    for spos in refpoints:
-        if spos in myset:
-            rmlst.append(spos)
-        else:
-            if get_d(pt2,spos)<segmentrad:
-                rmlst.append(spos)
-                myset.add(spos)
-    return rmlst
 def pointin(pt,rectpt,rect):
     # handle singal point check
     if rect.x==0 and rect.y==0 and pt==rectpt:
@@ -216,6 +205,7 @@ def segment_oneforall(one,alls,):
         if uncom_segment_oneforone_part(left,right,downleft,downright,e) or uncom_segment_oneforone_part(*get4pos(e),one):
             ret.append(e)
     return ret
+
 def get_entity_bypos_circle(pos,search_list,d=0):
     ret=[]
     dsq=d**2

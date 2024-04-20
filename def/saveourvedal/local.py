@@ -1,4 +1,5 @@
-import typing
+import typing,simplelogger
+
 SCRIPTMASTER=None
 WORLD=None
 MAINCONTROLOBJ=[]
@@ -7,11 +8,12 @@ dotpath='def/saveourvedal/'
 FORMALNAME = 'Loneliness,neurOsama,supernoVa,Existence and '
 INTERNALNAME='Saveourvedal'
 FN_STANDFOR='LNSE'
-VERSION='d6'
-LASTUPDATE='2023.8.26'
+VERSION='d8'
+LASTUPDATE='2024.4.04'
 AUTHOR='archotechsporeeta'
 VERSION_D='L.N.S.E(%s) %s (%s) by %s' % (INTERNALNAME,VERSION,LASTUPDATE,AUTHOR)
-
+loclogger = simplelogger.Logger(INTERNALNAME+' ' + VERSION)
+LOADPROCESSER = None
 
 def get_master(m):
     global SCRIPTMASTER,WORLD
@@ -21,13 +23,19 @@ def get_master(m):
 def get_scriptmaster():
     global SCRIPTMASTER
     return SCRIPTMASTER
-
+def set_loadprocesser(p):
+    global LOADPROCESSER
+    LOADPROCESSER = p
+def get_loadprocesser():
+    global LOADPROCESSER
+    return LOADPROCESSER
 def get_world():
     global WORLD
     return WORLD
 def set_MCO(mco):
     global MAINCONTROLOBJ
     MAINCONTROLOBJ = mco
+
 def add_MCO(mco):
     global MAINCONTROLOBJ
     MAINCONTROLOBJ.append(mco)
@@ -58,13 +66,21 @@ def MCO_destory(_class):
             MAINCONTROLOBJ.remove(m)
             return m
 
+try:
+    import numpy
+except ModuleNotFoundError:
+    numpy = None
 
+try:
+    import psutil
+except ModuleNotFoundError:
+    psutil = None
 
-import numpy,psutil
 try:
     import soundfile as sf
 except ModuleNotFoundError:
     sf = None
+
 try:
     import simpleaudio as SA
 except ModuleNotFoundError:

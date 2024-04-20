@@ -1,12 +1,16 @@
+from tool import argstrans
+from simplelogger import mainlogger
 RING0=0
 RING1=1
 RING2=2
 RING3=3
 
+
 class Trigger:
     def __init__(self,func):
         self.func=func
     def run(self,event,world):
+        '''(bool -> remove the trigger,bool -> break from the trigger for-each)'''
         return (False,False)
 
 
@@ -54,11 +58,14 @@ class EventRunner:
                 self.Runables[ring].remove(T)
             self.lasttick=tick
     def trigger(self,event):
+        mainlogger.debug('Eventrunner trigger ',event)
         temp_removed=[]
         if self.triggers:
             for trigger in self.triggers[::-1]:
-                if trigger.run(event,self):
+                result=argstrans(trigger.run(event,self),(False,False))
+                if result[0]:
                     temp_removed.append(trigger)
+                if result[1]:
                     break
         for T in temp_removed:
             self.triggers.remove(T)

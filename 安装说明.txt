@@ -1,0 +1,30 @@
+[2024.4.21]
+必须安装python3.8+版本（使用了一个3.8以后的特性）
+
+1.首先安装python
+到python官网上安装 建议版本为3.8-3.11 切勿安装2.x版本
+2.安装pygame
+安装python后
+打开命令提示符/powershell/Terminal
+输入
+pip3 install pygame
+如果显示没有pip3这个东西的话，恭喜你需要用更麻烦的方法 我不太好说 
+	1.总之是要找到python的安装目录下的Scripts目录
+	再输入这个命令
+	
+	2.说不定可以用这个 python3 -m pip install pygame
+	我没试过 可能有用
+
+大概需要数分钟时间
+3.启动游戏
+注意：不能直接双击 
+右键「main.py」，选择[edit it with idle] 
+会跳出一个白色界面显示main.py的代码
+然后按F5就可以了
+
+
+
+Archotechsporeeta
+saveourvedal d3 DEMO
+
+

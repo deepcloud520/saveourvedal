@@ -46,6 +46,15 @@ def generate_fractal_noise_2d(shape, res, octaves=1, persistence=0.5):
         amplitude *= persistence
     return noise
 
+def scalx_array(array,sx):
+    '''scalx array as scalx'''
+    return np.repeat(np.repeat(array,sx,axis=1),sx,axis=0)
+def subarray(array,pos,rect):
+    return array[pos.x:pos.x+rect.x,pos.y:pos.y+rect.y]
+'''
+def downsize_array(array,scalx):
+    return array[pos.x:pos.x+rect.x,pos.y:pos.y+rect.y]
+'''
 def bloom(image):
     import scipy
     start=time.time()
@@ -80,6 +89,10 @@ R=0.3
 G=0.59
 B=0.11
 ITER=3
+
+
+
+
 import time
 class CloudRollRunable(Runable):
     def __init__(self,cloud : pg.Surface,entityscreen:EntityScreen):
@@ -99,15 +112,18 @@ class StatImageRollRunable(Runable):
     '''状态机 {"i_0":[1000,"i_0","texture.story0_bedroom"]}'''
     def __init__(self,textures:dict,entityscreen:EntityScreen,trans_vel=0.005):
         super().__init__()
-        self.textures = textures
+        
         self.entityscreen=entityscreen
-        self.frame='s'
-        self.stat = 0
-        self.process=0.0
         self.trans_vel=trans_vel
         self.trans_array=None
         self.left=None
         self.right=None
+        self.reset_textures(textures)
+    def reset_textures(self,textures):
+        self.textures = textures
+        self.frame='s'
+        self.stat = 0
+        self.process=0.0
         self.entityscreen.image = resmanager.DefResourceDomain.get_resource(self.get_frame(self.frame)[2])
     def get_frame(self,frame):
         return self.textures[frame]

@@ -6,6 +6,7 @@ from local import *
 import pygame as pg
 import pygame.locals as PGKEY
 import resmanager,copy,functools,code
+from newcoretiny import Runable
 from itertools import chain
 import traceback as tb
 
@@ -24,22 +25,23 @@ def loadjson(file):
 sys._stdout = sys.stdout
 sys._stderr = sys.stderr
 
-normalfont = pg.font.Font('yahei.ttf', 15)
-chinesefont1 = pg.font.Font('qingkongwan.ttf',19)
-chinesefont2 =  pg.font.Font('xiaoxiong.ttf',19)
-smallchinesefont1 = pg.font.Font('qingkongwan.ttf',15)
-bigchinesefont1 = pg.font.Font('qingkongwan.ttf',24)
-bigchinesefont2 = pg.font.Font('xiaoxiong.ttf',24)
-normalfont3 = pg.font.Font('yahei.ttf', 20)
-normalfont2 = pg.font.Font('yahei.ttf', 21)
-verybigfont1 = pg.font.Font('Sounso-Undividedad.ttf', 32)
-terminalfont1 = pg.font.Font('Liberation Mono.ttf',16)
+yaheifont = pg.font.Font('yahei.ttf', 15)
+qingkongsmall = pg.font.Font('qingkongwan.ttf',19)
+xiaoxiongsmall =  pg.font.Font('xiaoxiong.ttf',19)
+qingkongverysmall = pg.font.Font('qingkongwan.ttf',15)
+qingkongbig = pg.font.Font('qingkongwan.ttf',24)
+xiaoxiongbig = pg.font.Font('xiaoxiong.ttf',24)
+yaheibig = pg.font.Font('yahei.ttf', 20)
+yaheibig2 = pg.font.Font('yahei.ttf', 21)
+sounsobig = pg.font.Font('Sounso-Undividedad.ttf', 32)
+xiaoxiongverybig = pg.font.Font('xiaoxiong.ttf',32)
+liberationmono = pg.font.Font('Liberation Mono.ttf',14)
 
 led1 = pg.font.Font('Digital-Play-St-3.ttf', 40)
 
 
-for f,name in zip((normalfont,chinesefont1,chinesefont2,normalfont2,normalfont3,bigchinesefont1,led1,verybigfont1,terminalfont1),
-                  ('normalfont','chinesefont1','chinesefont2','normalfont2','normalfont3','bigchinesefont1','led1','verybigfont1','terminalfont1')):
+for f,name in zip((yaheifont,qingkongsmall,xiaoxiongsmall,yaheibig2,yaheibig,qingkongbig,led1,sounsobig,liberationmono),
+                  ('yaheifont','qingkongsmall','xiaoxiongsmall','yaheibig2','yaheibig','qingkongbig','led1','sounsobig','liberationmono')):
     resmanager.DefResourceDomain.add_resource('font.'+name,f)
 
 class effect():
@@ -133,11 +135,12 @@ class effect_showline(effect):
             if self.lasttick+self.lasttime <tick:
                 self.set_dead()
                 return True
+
 class effect_showline_stand(effect_showline):
     def draw(self,scr):
         scr.blit(self.image,(self.pos-point(self.image.get_size()[0]/2,0))._intlist())
         
-def fast_print(info,pos=None,fontcolor=(180,255,220,200),font=resmanager.DefResourceDomain.get_resource('font.bigchinesefont1')):
+def fast_print(info,pos=None,fontcolor=(180,255,220,200),font=resmanager.DefResourceDomain.get_resource('font.qingkongbig')):
     if not pos:
         window = get_world().window
         pos = point(window.x*0.4,window.y*0.05)
@@ -151,11 +154,36 @@ def print_dialog(talkname:str,content:list):
                         fontcolor=(255,235,245,255),
                         roll_vel=0.03,
                         lasttime=len(''.join(content))*3+40,
-                        font=resmanager.DefResourceDomain.get_resource('font.bigchinesefont1'),
+                        font=resmanager.DefResourceDomain.get_resource('font.qingkongbig'),
                         start_pos=len(talkname)+3
                         )
     get_world().effects.append(effect)
     return effect
+
+
+
+class RollControlRunable(Runable):
+    def __init__(self,control,targetpos,startpos=None,rolling=slow_to_fast,vel=0.01):
+        super().__init__()
+        self.control=control
+        self.targetpos=targetpos
+        self.rolling=rolling
+        
+        if startpos:
+            self.control.pos = startpos.copy()
+            self.startpos=startpos
+        else:
+            self.startpos = self.control.pos.copy()
+        self.detla=self.targetpos-self.startpos
+        self.process = 0
+        self.vel = vel
+    def update(self,tick,master):
+        self.control.pos = self.startpos+self.detla * self.rolling(self.process)
+        self.process += self.vel
+        if self.process>=1:
+            return True
+
+
 
 class EntityButton(Entity):
     def __init__(self, pos, boxpos, boxrect, text, font, bottomcolor, fontcolor, definedfunction, deep=0, defname=None,
@@ -290,12 +318,21 @@ class EntitySwitch(Entity):
 class EntityLabel(Entity):
     def __init__(self, pos, boxpos, text, font, bottomcolor, fontcolor, deep=0, defname=None, showdeep=0):
         super().__init__(pos, boxpos, boxrect=point(0, 0), deep=deep, defname=defname, showdeep=showdeep)
+        
+        self.text=text
+        self.font=font
+        self.bottomcolor=bottomcolor
+        self.fontcolor=fontcolor
         self.hitbox.rect = tuple2point(self.change_text(text, font, bottomcolor, fontcolor).get_size())
+    def change_text(self, text=None, font=None, bottomcolor=None, fontcolor=None):
+        self.text = argstrans(text,self.text)
+        self.font = argstrans(font,self.font)
+        self.bottomcolor = argstrans(bottomcolor,self.bottomcolor)
+        self.fontcolor = argstrans(fontcolor,self.fontcolor)
 
-    def change_text(self, text, font, bottomcolor, fontcolor):
-        image = font.render(text, True, fontcolor).convert_alpha()
+        image = self.font.render(self.text, True, self.fontcolor).convert_alpha()
         self.image = pg.Surface(image.get_size()).convert_alpha()
-        self.image.fill(bottomcolor)
+        self.image.fill(self.bottomcolor)
         self.image.blit(image, (0, 0))
         return self.image
 
@@ -401,14 +438,14 @@ def middle_label_mirror(object_,pos,rect):
     # (partname,resname)
     return EntityLabel(pos,
                         point(0, 0),
-                        object_[0], normalfont,
+                        object_[0], yaheifont,
                         (10, 10, 10, 50),(141, 193, 178, 250),
                         deep=0, defname=object_[1], showdeep=0)
 def left_button_mirror(object_,pos,rect):
     # (partname,resname,func)
     return EntityButton(pos,
                         point(0, 0), point(rect.x-10,22),
-                        object_[0], normalfont,
+                        object_[0], yaheifont,
                         (10, 10, 10, 50),(141, 193, 178, 250), definedfunction=object_[2],
                         deep=0, defname=object_[1], showdeep=0)
 
@@ -416,7 +453,7 @@ def launch_button_mirror(object_,pos,rect):
     # (partname,resname,func)
     return EntityButton(pos,
                         point(0, 0), point(rect.x-10,22),
-                        object_[0], normalfont,
+                        object_[0], yaheifont,
                         (160,167,188,30),(250, 250, 250, 100), definedfunction=object_[2],
                         deep=0, defname=object_[1], showdeep=0)
 TABLE_WIDTH=10
@@ -509,7 +546,7 @@ class EntityFrameDebate(EntityFrame):
 TOWARDLEFT=1
 TOWARDRIGHT=0
 class EntityDialog(Entity):
-    def __init__(self, pos,boxrect,talker, text, titlefont=normalfont3,textfont=chinesefont1,toward=TOWARDRIGHT,deep=0, defname='', showdeep=0):
+    def __init__(self, pos,boxrect,talker, text, titlefont=yaheibig,textfont=qingkongsmall,toward=TOWARDRIGHT,deep=0, defname='', showdeep=0):
         super().__init__(pos, boxpos=point(0, 0), boxrect=boxrect, deep=deep, defname=defname, showdeep=showdeep)
         self.talker = talker
         self.text = text
@@ -527,9 +564,9 @@ class EntityDialog(Entity):
             self.surface.blit(talkerhead, (0, 0))
         else:
             temp=titlefont.render(self.talkname, True, (200,200,255,255)).convert_alpha()
-            self.surface.blit(temp, (380-temp.get_size()[0]-2, 2))
+            self.surface.blit(temp, (DIALOG_WIDTH-talkerhead.get_size()[0]-temp.get_size()[0]-2, 2))
             start_pos=point(2,24)
-            self.surface.blit(talkerhead, (380, 0))
+            self.surface.blit(talkerhead, (DIALOG_WIDTH-talkerhead.get_size()[0], 0))
         self.toward=toward
         for line in text:
             self.surface.blit(textfont.render(line, True, (200,200,255,255)).convert_alpha(),point2tuple(start_pos))
@@ -585,7 +622,13 @@ class FrameManager():
                 if defname in self.hide:
                     self.hide.remove(c.defname)
                 return
-
+    def switch_control(self,defname):
+        if defname in self.hide:
+            self.show_control(defname)
+        else:
+            self.hide_control(defname)
+        return True
+        
     def isin(self, defname):
         return defname in self.mxlst
 
@@ -837,9 +880,58 @@ class EntityTerminalDebug(EntityTerminalPrompt):
         self.prompt_back()
         self.flush()
 
+class EntityScreen(Entity):
+    def __init__(self, pos,boxpos,boxrect,deep=0, defname=None, showdeep=0,info=''):
+        super().__init__(pos, boxpos=boxpos, boxrect=boxrect, deep=deep, defname=defname, showdeep=showdeep,info=info)
+        self.image = pg.Surface(point2tuple(boxrect)).convert_alpha()
+    def eventupdate(self,se,bias):
+        pass
+
+try:
+    import hiyoricore as hiyori
+    class EntityCanvas(EntityScreen):
+        def __init__(self, pos,boxpos,boxrect,scalx:int,rgbbase=None,rgbbottom=None,alpha=255,deep=0, defname=None, showdeep=0,info=''):
+            super().__init__(pos=pos, boxpos=boxpos, boxrect=boxrect*scalx, deep=deep, defname=defname, showdeep=showdeep,info=info)
+            self.image = self.image.convert()
+            self.image.set_alpha(alpha)
+            self.image_array = numpy.zeros(boxrect._intlist(),dtype='float16')
+            self.drawer =  numpy.array([[0.8,0.8,0.8],[0.8,1,0.8],[0.8,1,0.8]]) / 4
+            RGBbase = rgbbase if rgbbase is not None else numpy.full((boxrect.x*scalx,boxrect.y*scalx,3),255).astype('float16')
+            self.RGBbottom = (rgbbottom if rgbbottom is not None else numpy.full((boxrect.x*scalx,boxrect.y*scalx,3),0).astype('float16'))
+            self.RGBdetla = RGBbase - self.RGBbottom
+            self.drawer_rect = point(*self.drawer.shape)
+            self.scalx = scalx
+            self.image.set_colorkey(((0,0,0)))
+            self.rel=point(0,0)
+        def draw(self,scr,bias):
+            super().draw(scr,bias)
+            mouse,button = tuple2point(pg.mouse.get_pos())+bias,pg.mouse.get_pressed()
+            force = get_d_square(mouse-self.rel,point(0,0)) / 10
+            self.rel = mouse
+            if pointin(mouse,self.pos,self.hitbox.rect):
+                if any(button):
+                    rel_pos = ((mouse-self.pos) * (1/self.scalx)).__int__()
+                    view = hiyori.subarray(self.image_array,rel_pos,self.drawer_rect)
+                    if button[0]:
+                        view[:]= numpy.minimum(view+self.drawer[:view.shape[0],:view.shape[1]]*force,1)
+                    elif button[2]:
+                        view[:,:] = 0
+                    self.update_image()
+        def update_image(self):
+            w = pg.surfarray.pixels3d(self.image)
+            w[:]= ((hiyori.scalx_array(self.image_array,self.scalx).T*self.RGBdetla.T).T+self.RGBbottom).astype('int8')
+            
+except ImportError:
+    pass
+
+
 
 
 def create_textlines(frame,textlines,font,start_pos,bias_y,bottomcolor,fontcolor,mode='left'):
+    '''
+    Use to add Labels to frame.
+    mode='left' / 'right' / 'centre' 
+    '''
     for line in textlines:
         tempLabel=EntityLabel(start_pos,point(0,0),line,font,bottomcolor,fontcolor)
         if mode=='centre':
@@ -847,7 +939,7 @@ def create_textlines(frame,textlines,font,start_pos,bias_y,bottomcolor,fontcolor
         elif mode=='right':
             tempLabel.pos.x -= tempLabel.hitbox.rect.x
         frame.add_control(tempLabel)
-        start_pos.y+=bias_y
+        start_pos.y+=bias_y+tempLabel.hitbox.rect.y
 
 
 
@@ -860,7 +952,7 @@ def resentence(open_sentence='sentences.normal1'):
     global SENTENCE
     SENTENCE = random.choice(resmanager.NameResourceDomain.get_resource(open_sentence))
 
-def _load_process_(text,bgimageres=None,bottomcolor=(15,16,40,200),open_sentence='sentences.normal1',tick=0):
+def _load_process_(text,textcolor=(200,210,200,220),bgimageres=None,bottomcolor=(15,16,40,200),open_sentence='sentences.normal1',tick=0):
     global LASTTIME,SENTENCE,BACKIMAGES,BACKIMAGE
     if LASTTIME + 20 < tick:
         BACKIMAGE=resmanager.DefResourceDomain.get_resource(random.choice(BACKIMAGES))
@@ -870,7 +962,7 @@ def _load_process_(text,bgimageres=None,bottomcolor=(15,16,40,200),open_sentence
     bgimage = resmanager.DefResourceDomain.get_resource(bgimageres) if bgimageres else BACKIMAGE
     if bgimage:get_world().surface.blit(bgimage,(0,0))
     
-    text = normalfont.render(text, True, (200,210,200,220)).convert_alpha()
+    text = yaheifont.render(text, True, textcolor).convert_alpha()
     textsize = text.get_size()
     image = pg.Surface((textsize[0]+80,45)).convert_alpha()
     image.fill(bottomcolor)
@@ -880,7 +972,7 @@ def _load_process_(text,bgimageres=None,bottomcolor=(15,16,40,200),open_sentence
     image.blit(text,fonttop._intlist())
     if open_sentence:
         #temp=resmanager.NameResourceDomain.get_resource(open_sentence)
-        sentence=normalfont.render(SENTENCE,True, (200,210,200,220)).convert_alpha()
+        sentence=yaheifont.render(SENTENCE,True, (200,210,200,220)).convert_alpha()
         sentencesize=tuple2point(sentence.get_size())
         sentencebottom=pg.Surface(sentence.get_size()).convert_alpha()
         sentencebottom.fill(bottomcolor)
@@ -892,9 +984,9 @@ def _load_process_(text,bgimageres=None,bottomcolor=(15,16,40,200),open_sentence
 
 
 HISTORY=[]
-def _load_process_text(text,textcolor):
+def _load_process_text(text,textcolor,bgimageres=None,bottomcolor=(15,16,40,200),open_sentence='sentences.normal1',tick=0):
     global HISTORY
-    HISTORY.append(normalfont.render(text[:100], True, textcolor).convert_alpha())
+    HISTORY.append(yaheifont.render(text[:100], True, textcolor).convert_alpha())
     get_world().surface.fill((0,0,0,255))
     start_pos = point(2,2)
     bias_y = 18
@@ -904,7 +996,5 @@ def _load_process_text(text,textcolor):
             get_world().surface.blit(text,point2tuple(start_pos))
         start_pos.y += bias_y
     pg.display.update()
-
-
 
 LOAD_PROCESS = {'GUI':_load_process_,'text':_load_process_text}

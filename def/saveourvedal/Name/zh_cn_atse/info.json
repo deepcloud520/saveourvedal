@@ -1,10 +1,10 @@
 {
         "info.textload":"以文本模式启动",
-        "info.transogg":"解压ogg中 使用[max_workers]个进程",
+        "info.transogg":"转换ogg中 使用{max_workers}个进程",
+        "info.transogg_2":"转换ogg中 正在等待{worker_info}",
         "info.loaddef":"加载def",
         "info.loadmco":"加载mco",
         "info.loadmusic":"...",
-        "info.textload2":["People talking without speaking","People hearing without listening"],
         "info.textload3":["   Load Configure...."],
         
         "info.research.tail.part_start":"解锁以下部件：",
@@ -28,34 +28,6 @@
         "info.medal.earthspace.medal6":"达到65000m高度",
         "info.about":
         [
-            "saveourship d4 by archotechsporeeta",
-            "基于pygame+python3制作",
-            "------------",
-            "感谢:",
-            "Vedal,Neuro-Sama,EvilNeuro,Anny,等等(还需要我说理由吗)",
-            "以及@Iron_milk铁牛奶,@Lycrios788,等等",
-            "是我们天朝蜂群的第一生产力",
-            "还要感谢所有因为Neuro而联系在一起的来自地球的各个角落的蜂群们",
-            "最后是屏幕前的你",
-            "感谢游玩此拙作",
-            "------------",
-            "我知道GUI写得非常难看 别骂我了QAQ",
-            "我自己画的贴图我知道很丑 所以有没有人帮我重画一下 UwU",
-            "------------",
-            "本游戏中的部分图像,字体，音频数据来自互联网",
-            "如有侵害任何原作者及图像中人物的权利 我会第一时间删除相关内容",
-            "引用资源如下:",
-            "进入界面/打开游戏:来自AliceInCradle OST.",
-            "主界面 背景音乐：来自 Neuro，Evil歌回/Rimworld P-music",
-            "还有所有用到的字体",
-            "本游戏所涉及的人物，故事皆基于二次创作，请勿与现实中的人物对应",
-            "本游戏的*代码*基于GNU协议进行开源（pygame是GNU协议的 UwU）",
-            "------------",
-            "有bug，建议什么的请移步,（高中学业繁忙可能看不了也没法修bug）",
-            "QQ：@archotechsporeeta offical(2106830798)",
-            "BiliBili:@超凡科技孢子（希腊字母eta）",
-            "------------",
-            "Archotech Spore Eta 2023.8.28"
         ],
         "info.maininfo":
         [

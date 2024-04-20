@@ -429,7 +429,7 @@ class WorldEngine:
                 living.onnothitflag()
                 
 
-            if abs(living.vel.x) < 0.01: living.vel.x = 0
+            if abs(living.vel.x) < 0.0001: living.vel.x = 0
             if abs(living.vel.y) < 0.0001: living.vel.y = 0
         # print()
 

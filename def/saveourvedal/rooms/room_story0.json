@@ -21,7 +21,7 @@
                         "defname":"back",
                         "pos":"0x0",
                         
-                        "textures":{"i_0":[1000,"i_0","texture.story0_bedroom"]}
+                        "textures":{"i_0":[1000,"i_0","texture.story0.bedroom"]}
                         
                     }
                     
@@ -32,7 +32,7 @@
                     {
                         "defname":"back",
                         "pos":"0x836",
-                        "textures":{"i_0":[1000,"i_0","texture.story0_bed"]},
+                        "textures":{"i_0":[1000,"i_0","texture.story0.bed"]},
                         "boxrect":"400x64",
                         "info":"story0.bedroom.bed.info",
                         "interfunc":
@@ -63,7 +63,7 @@
                             {
                                 "res":"story0.bedroom.vase.dialog"
                             }
-                       }
+                        }
                     }
                     
                 },
@@ -140,9 +140,28 @@
                     {
                         "defname":"back",
                         "pos":"0x0",
+                        "textures":{"i_0":[1000,"i_0","texture.story0.streamroom_background"]}
                         
-                        "textures":{"i_0":[1000,"i_0","texture.story0_streamroom_background"]}
-                        
+                    }
+                },
+                {
+                    "type":"EntityImage",
+                    "data":
+                    {
+                        "defname":"front",
+                        "pos":"120x280",
+                        "showdeep":5,
+                        "boxrect":"120x120",
+                        "textures":{"i_0":[1000,"i_0","texture.story0.streamroom_blackfront"]},
+                        "info":"story0.livingroom.terminal.info",
+                        "interfunc":
+                        {
+                            "type":"push_trigger",
+                            "data":
+                            {
+                                "trigger":"mnistframe"
+                            }
+                       }
                     }
                 }
             ],
@@ -151,7 +170,19 @@
             ],
         "blockeds":
             [
-                {"type":"EntityRealDoor","data":{"defname":"doorleft","pos":"800x300","rect":"10x100","info":"卧室的门"}}
+                {"type":"EntityRealDoor","data":{"defname":"doorleft","pos":"800x300","rect":"10x100","info":"卧室的门"}},
+                
+                {
+                    "type":"EntityFakeDoor",
+                    "data":
+                    {
+                        "defname":"dreamhead",
+                        "pos":"0x300",
+                        "rect":"10x100",
+                        "info":"通往客厅",
+                        "locked":1
+                    }
+                }
             ],
         "isfillwall":1,
         "roombox":["0x0","800x400"],

@@ -79,13 +79,13 @@ def set_mirror(buildframe,tablemiddle):
             newfocus=touchpad.stages[defname]
             touchpad.set_focus(newfocus)
             # 更换focus。重设label
-            buildframe.get_control('labelfocus').change_text('Focus:' + defname, normalfont, (20, 80, 50, 10),
+            buildframe.get_control('labelfocus').change_text('Focus:' + defname, yaheifont, (20, 80, 50, 10),
                                                              (255, 80, 50, 200))
-            buildframe.get_control('labelmass').change_text(resmanager.NameResourceDomain.get_resource('info.build.rocketinfo.mass').replace('[mass]',str(newfocus.mass)), normalfont, (20, 80, 50, 10),
+            buildframe.get_control('labelmass').change_text(resmanager.NameResourceDomain.get_resource('info.build.rocketinfo.mass').replace('[mass]',str(newfocus.mass)), yaheifont, (20, 80, 50, 10),
                                                              (255, 80, 50, 200))
-            buildframe.get_control('labelthrust').change_text(resmanager.NameResourceDomain.get_resource('info.build.rocketinfo.thrust').replace('[thrust]',str(newfocus.thrust)), normalfont, (20, 80, 50, 10),
+            buildframe.get_control('labelthrust').change_text(resmanager.NameResourceDomain.get_resource('info.build.rocketinfo.thrust').replace('[thrust]',str(newfocus.thrust)), yaheifont, (20, 80, 50, 10),
                                                              (255, 80, 50, 200))
-            buildframe.get_control('labelcost').change_text(resmanager.NameResourceDomain.get_resource('info.build.rocketinfo.cost').replace('[cost]',str(newfocus.cost)), normalfont, (20, 80, 50, 10),
+            buildframe.get_control('labelcost').change_text(resmanager.NameResourceDomain.get_resource('info.build.rocketinfo.cost').replace('[cost]',str(newfocus.cost)), yaheifont, (20, 80, 50, 10),
                                                              (255, 80, 50, 200))
             # 传递parts_stack
             tablemiddle.list_clear()
@@ -127,7 +127,7 @@ class EntityTouchPad_Right(EntityTouchPad):
         self.add_control(get_default_mirror(point(0, 0), None,
                                             self.def_buttonmirror,
                                             self.focus.name,
-                                            font=normalfont,bias=point(0,0)))
+                                            font=yaheifont,bias=point(0,0)))
         self.main_stage = self.focus
     def get_focus(self):
         return self.focus
@@ -147,7 +147,7 @@ class EntityTouchPad_Right(EntityTouchPad):
             father = self.get_control(_focus.name)
             child = self.add_control(
                     get_default_mirror(father.pos, LEFT, self.def_buttonmirror, temp.name,
-                                       font=normalfont,bias=self.pos))
+                                       font=yaheifont,bias=self.pos))
             self.lines.update({temp.name:(get_centre(father),get_centre(child),ctype)})
 
     def add_right_child(self, ctype,_stage=None, _focus=None):
@@ -161,7 +161,7 @@ class EntityTouchPad_Right(EntityTouchPad):
             father = self.get_control(_focus.name)
             child = self.add_control(
                     get_default_mirror(father.pos, RIGHT, self.def_buttonmirror, temp.name,
-                                       font=normalfont,bias=self.pos))
+                                       font=yaheifont,bias=self.pos))
             self.stages.update({temp.name:temp})
             self.lines.update({temp.name:(get_centre(father),get_centre(child),ctype)})
 
@@ -176,7 +176,7 @@ class EntityTouchPad_Right(EntityTouchPad):
             father = self.get_control(_focus.name)
             child = self.add_control(
                     get_default_mirror(father.pos, UP, self.def_buttonmirror, temp.name,
-                                       font=normalfont,bias=self.pos))
+                                       font=yaheifont,bias=self.pos))
             self.stages.update({temp.name:temp})
             self.lines.update({temp.name:(get_centre(father),get_centre(child),ctype)})
 
@@ -191,7 +191,7 @@ class EntityTouchPad_Right(EntityTouchPad):
             father = self.get_control(_focus.name)
             child = self.add_control(
                     get_default_mirror(father.pos, DOWN, self.def_buttonmirror, temp.name,
-                                       font=normalfont,bias=self.pos))
+                                       font=yaheifont,bias=self.pos))
             self.stages.update({temp.name:temp})
             self.lines.update({temp.name:(get_centre(father),get_centre(child),ctype)})
     def draw(self,scr,bias):
@@ -224,7 +224,7 @@ class MainInterfaceRunable(Runable):
         resmanager.SaveResourceDomain = pickle.load(f)
         fast_print('open save complete!')
         # 替换播放列表，播放音乐
-        DefResourceDomain.get_resource('play_action')('replace play_list',play_list=resmanager.DefResourceDomain.get_resource('realmusic.bd'))
+        DefResourceDomain.get_resource('play_action')('replace play_list',play_list=resmanager.DefResourceDomain.get_resource('music.bd'))
         DefResourceDomain.get_resource('play_action')('playnow source',source=resmanager.DefResourceDomain.get_resource('realmusic.saveload'))
         tcr=TimeCoreRunable()
         get_world().eventrunner.Runables[RING0].append(tcr)
@@ -270,7 +270,7 @@ class MainInterfaceRunable(Runable):
                                                      point(window.x * 0.6, window.y - 35 - 20),
                                                      (40, 160, 40, 155),
                                                      defname='tpr')
-        ete=EntityTextEditer(point(window.x*0.4, 2), point(0, 0), point(window.x*0.3-10,25),chinesefont1,(20, 80, 50, 10), (165, 120, 189, 200))
+        ete=EntityTextEditer(point(window.x*0.4, 2), point(0, 0), point(window.x*0.3-10,25),qingkongsmall,(20, 80, 50, 10), (165, 120, 189, 200))
         
         buildframe.add_control(touchpadright)
         buildframe.add_control(tablemiddle)
@@ -278,11 +278,11 @@ class MainInterfaceRunable(Runable):
         
         
         def update_info():
-            buildframe.get_control('labelmass').change_text(resmanager.NameResourceDomain.get_resource('info.build.rocketinfo.mass').replace('[mass]',str(touchpadright.focus.mass)), normalfont, (20, 80, 50, 10),
+            buildframe.get_control('labelmass').change_text(resmanager.NameResourceDomain.get_resource('info.build.rocketinfo.mass').replace('[mass]',str(touchpadright.focus.mass)), yaheifont, (20, 80, 50, 10),
                                                              (255, 80, 50, 200))
-            buildframe.get_control('labelthrust').change_text(resmanager.NameResourceDomain.get_resource('info.build.rocketinfo.thrust').replace('[thrust]',str(touchpadright.focus.thrust)), normalfont, (20, 80, 50, 10),
+            buildframe.get_control('labelthrust').change_text(resmanager.NameResourceDomain.get_resource('info.build.rocketinfo.thrust').replace('[thrust]',str(touchpadright.focus.thrust)), yaheifont, (20, 80, 50, 10),
                                                              (255, 80, 50, 200))
-            buildframe.get_control('labelcost').change_text(resmanager.NameResourceDomain.get_resource('info.build.rocketinfo.cost').replace('[cost]',str(touchpadright.focus.cost)), normalfont, (20, 80, 50, 10),
+            buildframe.get_control('labelcost').change_text(resmanager.NameResourceDomain.get_resource('info.build.rocketinfo.cost').replace('[cost]',str(touchpadright.focus.cost)), yaheifont, (20, 80, 50, 10),
                                                              (255, 80, 50, 200))
                 
         def mtablepop(defname):
@@ -351,20 +351,20 @@ class MainInterfaceRunable(Runable):
                 
         buildframe.add_control(EntityButton(point(window.x*0.2, window.y*0.8), point(0, 0),point(window.x*0.1-5,35),
                                                 'Pop',
-                                               normalfont3,
+                                               yaheibig,
                                                (20, 80, 50, 10),(36,206,144,200), defname='Pop',definedfunction=mtablepop))
         buildframe.add_control(EntityButton(point(window.x*0.3-5, window.y*0.8), point(0, 0),point(window.x*0.1-5,35),
                                                    'Clear',
-                                                   normalfont3,
+                                                   yaheibig,
                                                    (20, 80, 50, 10),(36,206,144,200), defname='Clear',definedfunction=mtableclear))
                 
         buildframe.add_control(EntityButton(point(window.x*0.2, window.y*0.8+35), point(0, 0),point(window.x*0.1-5,35),
                                                    'Save',
-                                                   normalfont3,
+                                                   yaheibig,
                                                    (20, 80, 50, 10),(36,206,144,200), defname='save',definedfunction=mtablesave))
         buildframe.add_control(EntityButton(point(window.x*0.3-5, window.y*0.8+35), point(0, 0),point(window.x*0.1-5,35),
                                                    'Open',
-                                                   normalfont3,
+                                                   yaheibig,
                                                    (20, 80, 50, 10),(36,206,144,200), defname='open',definedfunction=buildopen))
                 
         # 左侧 向火箭stage中加减元件
@@ -387,34 +387,34 @@ class MainInterfaceRunable(Runable):
                 tableleft.list_append((resmanager.NameResourceDomain.get_resource(resmanager.DefResourceDomain.get_resource(item)['name']),item,add_part))
         buildframe.add_control(EntityButton(point(0, window.y*0.8), point(0, 0),point(80,25),
                                                 'Pod',
-                                               normalfont3,
+                                               yaheibig,
                                                (80,190,230,100), (180, 160, 250, 200), defname='Pod',definedfunction=tableshift))
         buildframe.add_control(EntityButton(point(80, window.y*0.8), point(0, 0),point(80,25),
                                                 'Thrust',
-                                               normalfont3,
+                                               yaheibig,
                                                (80,190,230,100), (180, 160, 250, 200), defname='Thrust',definedfunction=tableshift))
         buildframe.add_control(EntityButton(point(0, window.y*0.8+25), point(0, 0),point(80,25),
                                                 'Fuel',
-                                               normalfont3,
+                                               yaheibig,
                                                (80,190,230,100), (180, 160, 250, 200), defname='Fuel',definedfunction=tableshift))
 
         buildframe.add_control(EntityLabel(point(window.x * 0.7+10, 15), point(0, 0),
                                                    'Focus:None',
-                                                   normalfont,
+                                                   yaheifont,
                                                    (20, 80, 50, 10), (255, 80, 50, 200), defname='labelfocus'))
                 
                 
         buildframe.add_control(EntityLabel(point(window.x*0.4+2, window.y*0.7), point(0, 0),
                                                    '',
-                                                   normalfont,
+                                                   yaheifont,
                                                    (20, 80, 50, 10), (255, 80, 50, 200), defname='labelmass'))
         buildframe.add_control(EntityLabel(point(window.x*0.4+2, window.y*0.7+25), point(0, 0),
                                                    '',
-                                                   normalfont,
+                                                   yaheifont,
                                                    (20, 80, 50, 10), (255, 80, 50, 200), defname='labelthrust'))
         buildframe.add_control(EntityLabel(point(window.x*0.4+2, window.y*0.7+50), point(0, 0),
                                                    '',
-                                                   normalfont,
+                                                   yaheifont,
                                                    (20, 80, 50, 10), (255, 80, 50, 200), defname='labelcost'))
                 
                 
@@ -468,26 +468,26 @@ class MainInterfaceRunable(Runable):
         # 显示对火箭段控制的5个按钮
         buildframe.add_control(EntityButton(point(begin, tprwidth), point(0, 0),point(tprlength*0.2,35),
                                             'LEFT',
-                                            normalfont,
+                                            yaheifont,
                                             (20, 80, 50, 10), (255, 80, 50, 200), definedfunction=handlebutton,
                                             defname='left'))
         buildframe.add_control(EntityButton(point(begin+tprlength*0.2, tprwidth), point(0, 0),point(tprlength*0.2,35),
                                             'RIGHT',
-                                            normalfont,
+                                            yaheifont,
                                             (20, 80, 50, 10), (255, 80, 50, 200), definedfunction=handlebutton,
                                             defname='right'))
         buildframe.add_control(EntityButton(point(begin+tprlength*0.4, tprwidth), point(0, 0),point(tprlength*0.2,35),
                                             'UP',
-                                            normalfont,
+                                            yaheifont,
                                             (20, 80, 50, 10), (255, 80, 50, 200), definedfunction=handlebutton,
                                             defname='up'))
         buildframe.add_control(EntityButton(point(begin+tprlength*0.6, tprwidth), point(0, 0),point(tprlength*0.2,35),
                                             'DOWN',
-                                            normalfont,
+                                            yaheifont,
                                             (20, 80, 50, 10), (255, 80, 50, 200), definedfunction=handlebutton,
                                             defname='down'))
         buildframe.add_control(EntitySwitch(point(begin+tprlength*0.8, tprwidth), point(0, 0),point(tprlength*0.2,35),
-                                            normalfont,
+                                            yaheifont,
                                             (20, 80, 50, 10), (255, 80, 50, 200), stateenum={0:'Ha',1:'Se',2:'Rm'},
                                             defname='state'))
         # 显示建造界面，准备初始stage和映射
@@ -500,7 +500,7 @@ class MainInterfaceRunable(Runable):
         self.framemanager.show_control('build')
 
         touchpadright.init_stage()
-        buildframe.get_control('labelfocus').change_text('Focus:' + touchpadright.focus.name, normalfont3, (80, 100, 80, 200),
+        buildframe.get_control('labelfocus').change_text('Focus:' + touchpadright.focus.name, yaheibig, (80, 100, 80, 200),
                                                             (255, 80, 50, 200))
     def rolling_controls(self):
         label_neuro=self.framemanager.get_control('main').get_control('label_neuro')
@@ -518,11 +518,11 @@ class MainInterfaceRunable(Runable):
         create_textlines(infoframe,
                              map(lambda x:x.replace('[neuros]',str(resmanager.SaveResourceDomain.get_resource('neuros'))).replace('[science_points_total]',str(resmanager.SaveResourceDomain.get_resource('science_points_total'))).replace('[compute_total]',str(resmanager.SaveResourceDomain.get_resource('compute_total'))),
                                  resmanager.NameResourceDomain.get_resource('info.maininfo')),
-                                 chinesefont1,point(2,2),20,(0,0,0,0),(123,234,234,250)
+                                 qingkongsmall,point(2,2),2,(0,0,0,0),(123,234,234,250)
                                  )
         create_textlines(infoframe,
                              map(lambda x:resmanager.NameResourceDomain.get_resource(x['info']),resmanager.SaveResourceDomain.get_resource('medals').values()),
-                                 chinesefont1,point(2,170),20,(50,50,50,50),(234,234,123,250)
+                                 qingkongsmall,point(2,170),2,(50,50,50,50),(234,234,123,250)
                                  )
         
         self.framemanager.hide_all()
@@ -547,15 +547,15 @@ class MainInterfaceRunable(Runable):
                 
             for info in resmanager.NameResourceDomain.get_resource(resear['info']):
                 researchinfo.add_control(EntityLabel(start_pos,point(0,0),info,
-                                                         chinesefont1,(0,0,0,0),(200,200,200,250)))
+                                                         qingkongsmall,(0,0,0,0),(200,200,200,250)))
                 start_pos.y+=20
             # 解锁部件
             researchinfo.add_control(EntityLabel(start_pos,point(0,0),resmanager.NameResourceDomain.get_resource('info.research.tail.part_start'),
-                                                    chinesefont1,(40,40,40,50),(82,121,240,250)))
+                                                    qingkongsmall,(40,40,40,50),(82,121,240,250)))
             start_pos.y+=20
             for info,type_ in resear['part']:
                 researchinfo.add_control(EntityLabel(start_pos,point(0,0),resmanager.NameResourceDomain.get_resource(resmanager.DefResourceDomain.get_resource(info)['name']),
-                                                         chinesefont1,(0,0,0,0),(82,121,240,250)))
+                                                         qingkongsmall,(0,0,0,0),(82,121,240,250)))
                 start_pos.y+=20
             # 小尾巴
             science_points=resear['science_points']
@@ -564,7 +564,7 @@ class MainInterfaceRunable(Runable):
             for info in resmanager.NameResourceDomain.get_resource('info.research.tail'):
                 researchinfo.add_control(EntityLabel(start_pos,point(0,0),
                                                          info.replace('[science_points]',str(science_points)).replace('[compute_points]',str(compute_points)).replace('[remain]',str(remain)),
-                                                         chinesefont1,(0,0,0,0),(160,250,250,250)))
+                                                         qingkongsmall,(0,0,0,0),(160,250,250,250)))
                     
                 start_pos.y+=20
             # 研究状态判断
@@ -586,16 +586,16 @@ class MainInterfaceRunable(Runable):
                 
             researchinfo.add_control(EntityLabel(start_pos,point(0,0),
                                                 resmanager.NameResourceDomain.get_resource(info),
-                                                chinesefont1,(0,0,0,0),(100,190,160,250)))
+                                                qingkongsmall,(0,0,0,0),(100,190,160,250)))
             researchinfo.add_control(EntityLabel(point(2,2),point(0,0),resmanager.NameResourceDomain.get_resource(resear['name']),
-                                                 bigchinesefont1,(0,0,0,0),(190,190,220,250)))
+                                                 qingkongbig,(0,0,0,0),(190,190,220,250)))
         
         # 填充研究树    
         BUTTONSIZE = point(100,25)
         for rsname,rsitem in rtree.items():
             fatherpos=str2point(rsitem['pos'])
             researchframe.add_control(EntityButtonImmerse(fatherpos, point(0, 0), BUTTONSIZE, resmanager.NameResourceDomain.get_resource(rsitem['name']),
-                                                       smallchinesefont1, (100, 100, 100, 100),(200, 200, 200, 200),set_research,press_speed=0.02,defname=rsname,fill_bottom=False))
+                                                       qingkongverysmall, (100, 100, 100, 100),(200, 200, 200, 200),set_research,press_speed=0.02,defname=rsname,fill_bottom=False))
             fatherpos_u=get_centre_u(fatherpos,BUTTONSIZE)
             for need in rsitem['need_research']:
                 researchframe.lines.append(
@@ -629,7 +629,7 @@ class MainInterfaceRunable(Runable):
         self.framemanager.add_control(launchopenframe)
 
         launchopenframe.add_control(EntityLabel(point(window.x*0.4-50,window.y*0.8-30),point(0,0),
-                                                      resmanager.NameResourceDomain.get_resource('info.launch.bottom'),bigchinesefont1,(0,0,0,0),(220,220,255,220)))
+                                                      resmanager.NameResourceDomain.get_resource('info.launch.bottom'),qingkongbig,(0,0,0,0),(220,220,255,220)))
         ot=EntityTable(point(2,2),point(window.x*0.8,window.y*0.8-30),
                                           mirror=launch_button_mirror,bottomcolor=(160,167,188,25),defname='opentable')
         launchopenframe.add_control(EntityStatImage(point(window.x*0.8-100,window.y*0.8-180),point(0,0),
@@ -659,14 +659,14 @@ class MainInterfaceRunable(Runable):
                     if self.lasttick + 10 <= tick:
                         self.lasttick = tick
                         self.k_att_label.change_text('{:0>6}'.format((abs(int(self.rocket.get_attitude())))), led1,(0,0,0,0),(0,200,200,255))
-                        self.k_vel_label.change_text('%s m/s' % str(int(rocket.get_realvel())), normalfont3,(0,0,0,0),(123,234,248,213))
+                        self.k_vel_label.change_text('%s m/s' % str(int(rocket.get_realvel())), yaheibig,(0,0,0,0),(123,234,248,213))
                         
                         i = 0
                         for name,num in self.rocket.resource.items():
                             cons = self.rocket.resource_consumption[name]
                             eta = trans_time(num//cons//50) if cons!=0 else (0,'-')
                             self.resource_labels[i].change_text('%s: %s [%s] ETA %s' % (name, '{:.2f}'.format(num), '{:.2f}'.format(cons), str(int(eta[0]))+eta[1],),
-                                                                normalfont,(0,0,0,0),((198,167,244,250) if eta[1]!='s' or eta[0]>=30 else (244,127,158,250)),)
+                                                                yaheifont,(0,0,0,0),((198,167,244,250) if eta[1]!='s' or eta[0]>=30 else (244,127,158,250)),)
                             i+=1
             def warp_(wstage):
                 # 从build哪里超的
@@ -740,22 +740,22 @@ class MainInterfaceRunable(Runable):
             controlpad.init_stage(rocket.stages[rocket.mainstage.name])
             controlframe = EntityFrame(point(window.x-200, window.y-100), point(200,100),defname='cf')
             controlframe.add_control(
-                EntityButtonImmerse(point(50, 0), point(0,0), point(100, 35), 'SEPA', bigchinesefont1,
+                EntityButtonImmerse(point(50, 0), point(0,0), point(100, 35), 'SEPA', qingkongbig,
                      (148,131,175,255), (148,131,175,200), sepa,press_speed=0.032))
             controlframe.add_control(
-                EntityButtonImmerse(point(0, 35), point(0,0), point(200, 35), 'Finish Mission', bigchinesefont1,
+                EntityButtonImmerse(point(0, 35), point(0,0), point(200, 35), 'Finish Mission', qingkongbig,
                      (148,131,175,255), (148,131,175,200), back,press_speed=0.042))
             self.framemanager.add_control(controlframe) 
             # 火箭状态显示                
             stateframe = EntityFrame(point(0, 0), point(window.x,50),bottomcolor=(40,80,40,60),defname='sf')
             att_label=EntityLabel(point(window.x//2-120,0),point(0,0),'000000',led1,(0,0,0,0),(220,255,255,255))
-            vel_label=EntityLabel(point(window.x//2+70,0),point(0,0),'0 m/s',normalfont2,(0,0,0,0),(220,255,255,255))
+            vel_label=EntityLabel(point(window.x//2+70,0),point(0,0),'0 m/s',yaheibig2,(0,0,0,0),(220,255,255,255))
             stateframe.add_control(att_label)
             stateframe.add_control(vel_label)
             self.framemanager.add_control(stateframe)
             resource_labels = tuple(
                 [stateframe.add_control(
-                    EntityLabel(point(20,10 + 19*i ),point(0,0),'Connecting...',normalfont2,(0,0,0,0),(255,255,180,255))) for i in range(len(rocket.resource))
+                    EntityLabel(point(20,10 + 19*i ),point(0,0),'Connecting...',yaheibig2,(0,0,0,0),(255,255,180,255))) for i in range(len(rocket.resource))
                     ]
                 )
             get_world().eventrunner.Runables[RING2].append(RocketStateUpdaterRunable(rocket,att_label,vel_label,resource_labels))
@@ -780,12 +780,15 @@ class MainInterfaceRunable(Runable):
             ot.list_append((name,(stage,name),launch))
     
     def reload(self):
+        loclogger.info('loading MainInterface...')
+
         self.framemanager = FrameManager()
         
         # 加载音乐
         mcr=DefResourceDomain.get_resource('MusicCoreRunableType')()
-        get_world().eventrunner.Runables[RING2].append(mcr)
         
+        get_MCO().append(mcr)
+        resmanager.DefResourceDomain.add_resource('play_action',mcr.play_action)
         window = get_world().window.copy()
         BD_WIDTH = 20  # 底条宽度
         top = point(0, window.y - BD_WIDTH)
@@ -799,19 +802,19 @@ class MainInterfaceRunable(Runable):
             EntityStatImage(point(0, 0), point(0,0), resmanager.DefResourceDomain.get_resource(resmanager.ConfigResourceDomain.get_resource('saveourvedal')['background'][0]))
             )
         bottomdisplay.add_control(
-            EntityButton(point(0, window.y - BD_WIDTH), point(0, 0), point(window.x*0.2, BD_WIDTH), 'Info', normalfont, (100, 100, 200, 100),
+            EntityButton(point(0, window.y - BD_WIDTH), point(0, 0), point(window.x*0.2, BD_WIDTH), 'Info', yaheifont, (100, 100, 200, 100),
                          (158,231,175,200),self.saveourvedal_info))
         bottomdisplay.add_control(
-            EntityButton(point(window.x*0.2, window.y - BD_WIDTH), point(0, 0), point(window.x*0.2, BD_WIDTH), 'Build', normalfont, (100, 100, 200, 100),
+            EntityButton(point(window.x*0.2, window.y - BD_WIDTH), point(0, 0), point(window.x*0.2, BD_WIDTH), 'Build', yaheifont, (100, 100, 200, 100),
                          (148,231,185,200), self.saveourvedal_build))
         bottomdisplay.add_control(
-            EntityButton(point(window.x*0.4, window.y - BD_WIDTH), point(0, 0), point(window.x*0.2, BD_WIDTH), 'Launch', normalfont, (100, 100, 200, 100),
+            EntityButton(point(window.x*0.4, window.y - BD_WIDTH), point(0, 0), point(window.x*0.2, BD_WIDTH), 'Launch', yaheifont, (100, 100, 200, 100),
                          (178,221,175,200), self.saveourvedal_launch))
         bottomdisplay.add_control(
-            EntityButton(point(window.x*0.6, window.y - BD_WIDTH), point(0, 0), point(window.x*0.2, BD_WIDTH), 'Research', normalfont, (100, 100, 200, 100),
+            EntityButton(point(window.x*0.6, window.y - BD_WIDTH), point(0, 0), point(window.x*0.2, BD_WIDTH), 'Research', yaheifont, (100, 100, 200, 100),
                          (148,231,175,200),self.saveourvedal_research))
         bottomdisplay.add_control(
-            EntityLabel(point(window.x*0.8, window.y - BD_WIDTH), point(0,0),'0 H', normalfont, (100, 100, 200, 100),
+            EntityLabel(point(window.x*0.8, window.y - BD_WIDTH), point(0,0),'0 H', yaheifont, (100, 100, 200, 100),
                          (148,211,195,200),defname='time'))
 
         self.framemanager.add_control(bottomdisplay)
@@ -833,15 +836,16 @@ class MainInterfaceRunable(Runable):
         mainframe.add_control(
             EntityStatImage(point(0,0),point(0,0),
                         resmanager.DefResourceDomain.get_resource(resmanager.ConfigResourceDomain.get_resource('entiy'))))
-        label_neuro = EntityLabel(point(20, window.y-190), point(0, 0), 'Neuro是大家的!!', bigchinesefont1,
+        label_neuro = EntityLabel(point(20, window.y-190), point(0, 0), 'Neuro是大家的!!', qingkongbig,
                         (20, 80, 50, 10), (255, 180, 150, 200),defname='label_neuro')
-        button_startgame = EntityButtonImmerse(point(20, window.y-150), point(0, 0), point(150, 30), 'NewGame', normalfont,
+        button_startgame = EntityButtonImmerse(point(20, window.y-150), point(0, 0), point(150, 30), 'NewGame', yaheifont,
                          (187,198,203,255), (187,198,203,255), self.saveourvedal_newgame,press_speed=0.02,defname='button_startgame')
-        button_resume = EntityButtonImmerse(point(20, window.y-110), point(0, 0), point(150, 30), 'ResumeGame', normalfont,
+        button_resume = EntityButtonImmerse(point(20, window.y-110), point(0, 0), point(150, 30), 'ResumeGame', yaheifont,
                          (187,198,203,255), (187,198,203,255), self.saveourvedal_open,press_speed=0.02,defname='button_resume')
-        button_exit = EntityButtonImmerse(point(20, window.y-70), point(0, 0), point(150, 30), 'Exit', normalfont,
+        button_exit = EntityButtonImmerse(point(20, window.y-70), point(0, 0), point(150, 30), 'Exit', yaheifont,
                          (187,198,203,255), (187,198,203,255), sys.exit,press_speed=0.02,defname='button_exit')
-        
+        canvas = EntityCanvas(point(200, window.y-300), point(0, 0), point(28, 28), scalx=5)
+        canvas2 = EntityCanvas(point(400, window.y-300), point(0, 0), point(28, 28), scalx=5)
         get_world().eventrunner.Runables[RING3].append(RollControlRunable(control=label_neuro,targetpos=label_neuro.pos,startpos=label_neuro.pos-point(200,0),rolling=fast_to_slow,vel=0.04))
         get_world().eventrunner.Runables[RING3].append(RollControlRunable(control=button_startgame,targetpos=button_startgame.pos,startpos=button_startgame.pos-point(200,0),rolling=fast_to_slow,vel=0.02))
         get_world().eventrunner.Runables[RING3].append(RollControlRunable(control=button_resume,targetpos=button_resume.pos,startpos=button_resume.pos-point(200,0),rolling=fast_to_slow,vel=0.018))
@@ -853,6 +857,7 @@ class MainInterfaceRunable(Runable):
         mainframe.add_control(label_neuro)
         mainframe.add_control(button_exit)
 
+
         # 对话框
         debateframe = EntityFrameDebate(point(window.x-DIALOG_WIDTH, 0), point(DIALOG_WIDTH,window.y), defname='debate')
         self.framemanager.add_control(debateframe)
@@ -861,20 +866,19 @@ class MainInterfaceRunable(Runable):
         self.framemanager.add_control(mainframe)
         self.framemanager.hide_control('bd')
         
+        loclogger.info('loading music...')
         # 加载音乐
         _load_process_(resmanager.NameResourceDomain.get_resource('info.loadmusic'))
-        soundpath=dotpath+'resource/sound/'
-        resmanager.DefResourceDomain.add_resource('play_action',mcr.play_action)
-        dtype=mcr.get_musictype()
-        resmanager.DefResourceDomain.add_resource('realmusic.saveload',dtype(soundpath+resmanager.DefResourceDomain.get_resource('music.saveload')))
-        resmanager.DefResourceDomain.add_resource('realmusic.entiy',dtype(soundpath+resmanager.DefResourceDomain.get_resource('music.entiy')))
-        resmanager.DefResourceDomain.add_resource('realmusic.bd',list(map(lambda x:soundpath+x,resmanager.DefResourceDomain.get_resource('music.bd'))))
         
+        load_singlesound('music.saveload')
+        load_singlesound('music.entiy')
+        '''
         musicbd__ = resmanager.DefResourceDomain.get_resource('music.bd')
+        # 歌曲本身没有扩展名
+        print(musicbd__)
         musicbd = {name:real for name,real in zip(musicbd__,resmanager.DefResourceDomain.get_resource('realmusic.bd'))}
-        #musicbd = list(map(lambda x:SA.WaveObject.from_wave_file(soundpath+x),DefResourceDomain.get_resource('music.bd')))
-        #random.shuffle(musicbd)
         resmanager.DefResourceDomain.add_resource('realmusic.bd',musicbd)
+        '''
         entiy = resmanager.DefResourceDomain.get_resource('music.entiy')
         realentiy = resmanager.DefResourceDomain.get_resource('realmusic.entiy')
         DefResourceDomain.get_resource('play_action')('replace play_list',play_list={entiy:realentiy})
@@ -887,6 +891,7 @@ class MainInterfaceRunable(Runable):
     def eventupdate(self, se):
         self.framemanager.eventupdate(se, point(0, 0))
     def add_story(self):
+        loclogger.info('loading storybook...')
         def load_script(scriptname):
             scr = importlib.import_module(scriptname)
             scr.open_storybook(self)
@@ -894,26 +899,7 @@ class MainInterfaceRunable(Runable):
 
 
 
-class RollControlRunable(Runable):
-    def __init__(self,control,targetpos,startpos=None,rolling=slow_to_fast,vel=0.01):
-        super().__init__()
-        self.control=control
-        self.targetpos=targetpos
-        self.rolling=rolling
-        
-        if startpos:
-            self.control.pos = startpos.copy()
-            self.startpos=startpos
-        else:
-            self.startpos = self.control.pos.copy()
-        self.detla=self.targetpos-self.startpos
-        self.process = 0
-        self.vel = vel
-    def update(self,tick,master):
-        self.control.pos = self.startpos+self.detla * self.rolling(self.process)
-        self.process += self.vel
-        if self.process>=1:
-            return True
+
 
 
 
@@ -923,7 +909,7 @@ class TimeCoreRunable(Runable):
     def next_hour(self):
         resmanager.SaveResourceDomain.resource['time']+=1
         MCO_target_classname('MainInterfaceRunable').framemanager.get_control('bd').get_control('time').change_text(str(resmanager.SaveResourceDomain.resource['time'])+' H',
-                                                                                 normalfont,
+                                                                                 yaheifont,
                                                                                  (100, 100, 200, 100),
                                                                                  (148,231,175,200))
         # 研究。还有其他什么东西也要写写
@@ -1031,7 +1017,7 @@ class DebugRunable(Runable):
         self.memview=None
         self.fpsview=None
         self.tickview=None
-        self.versionview = normalfont.render(VERSION_D,True,(120,188,188,255)).convert_alpha()
+        self.versionview = yaheifont.render(VERSION_D,True,(120,188,188,255)).convert_alpha()
         self.process=psutil.Process(getpid())
         self.open_view = True
         self.change_stat()
@@ -1046,9 +1032,9 @@ class DebugRunable(Runable):
             bs.blit(self.tickview,(2,42))
             bs.blit(self.versionview,(2,62))
     def change_stat(self):
-        self.memview = normalfont.render('Memory: %s MB' % str(self.process.memory_full_info().uss/1024/1024),True,(120,168,134,255))
-        self.fpsview = normalfont.render('Fps: %s' % str(get_world().fps),True,(120,168,134,255))
-        self.tickview = normalfont.render('Ticks: %s' % self.lasttick,True,(120,168,134,255))
+        self.memview = yaheifont.render('Memory: %s MB' % str(self.process.memory_full_info().uss/1024/1024),True,(120,168,134,255))
+        self.fpsview = yaheifont.render('Fps: %s' % str(get_world().fps),True,(120,168,134,255))
+        self.tickview = yaheifont.render('Ticks: %s' % self.lasttick,True,(120,168,134,255))
     def eventupdate(self,se):
         if se.type==PGKEY.KEYDOWN:
             if se.dict['unicode']=='`':

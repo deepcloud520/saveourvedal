@@ -25,6 +25,19 @@ def trigger(content):
     return warp
 
 
+class OpenFrameTrigger(Trigger):
+    def __init__(self,framesid,init_callback=None,event=None):
+        self.triggerevent=argstrans(event,framesid)
+        self.init_callback=init_callback
+        self.framesid=framesid
+    def run(self,event,master):
+        if self.triggerevent==event:
+            fm = MCO_target_classname(_class='MainInterfaceRunable').framemanager
+            frame=fm.get_control(self.framesid)
+            if self.init_callback:
+                self.init_callback(frame)
+            fm.switch_control(self.framesid)
+        return (False,False)
 
 # (tick,command,text)
 class TerminalCore(Runable):
@@ -100,6 +113,7 @@ class TheHeartofNeuroRunable(Runable):
             talkername = resmanager.NameResourceDomain.get_resource('name.talker.'+content[0])
             self.terminal.write(talkername+':'+'\n'.join(content[1]) + '\n',color=resmanager.DefResourceDomain.get_resource('color.talker.'+content[0]))
             if content[4]==0:
+                # Neuro 一面
                 print_dialog(talkername,content[1])
 
 
@@ -111,6 +125,7 @@ class AirisCoreRunable(Runable):
         self.freeze = False
         self.effects={}
         self.key_map={}
+        self.mouse = Entity(point(0,0),point(-10,-10),point(20,20))
     def eventupdate(self,evt):
         if evt.type == pg.locals.KEYDOWN:
             key = evt.dict['key']
@@ -141,13 +156,14 @@ class AirisCoreRunable(Runable):
             self.player.move(1)
         get_world().engine.camera_pos = get_centre_u(self.player.pos, point(0, 0) - get_world().window)+point(0,-80)
         # 处理interact
+        self.mouse.pos = tuple2point(pg.mouse.get_pos()) + get_world().engine.camera_pos
         engine=get_world().engine
         rm_mark=list(self.effects.keys())
         self.key_map={}
         i=1
-        image_args=((250,228,239,249),chinesefont2)
+        image_args=((250,228,239,249),xiaoxiongsmall)
         for entity in itertools.chain(engine.blockeds_line,engine.livings_line,engine.images_line):
-            if entity.info and segment_oneforone(self.player,entity):
+            if entity.info and segment_oneforone(self.mouse,entity):
                 specific = hash(entity)
                 info = ''
                 if entity.interfunc:
